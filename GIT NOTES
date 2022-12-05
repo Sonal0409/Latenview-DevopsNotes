@@ -1,0 +1,244 @@
+
+1. Check version of git on Lab
+. git --version
+
+2.Create a working directory and file inside it
+...
+sudo su -
+...
+mkdir myproject
+...
+cd myproject
+...
+touch index1.html index2.html
+
+3. Create a local repository
+...
+git init
+...
+
+ls -al == .git folder will be seen, which is local repo
+
+4. Configure git and set up the values for 2 variables : user.name & user.email
+
+...
+git config --global user.name sonal0409
+...
+
+git config --global user.email admin@gmail.com
+
+git config --list
+
+
+5. Check the status of working directory
+...
+git status
+...
+
+
+6. Add the files to stagging area
+
+  git add <filename>
+  
+  git add index1.html
+
+  git status
+
+7. Commit the stagged files to Local Repo
+
+  git commit -m "added file index1.html"
+
+8. Check files in Local repo
+
+ git lis-files
+
+9. Check you commit hisotry
+
+ git log
+
+ git log --oneline
+
+copy the commit id
+
+ git show <commitid>
+
+10. Take an exisitng file tracked by GIT and make some changes into it. Commit these changes to git
+
+Method 1:
+...
+
+  git commit -a -m "modified files"
+
+...
+
+Method2:
+
+ git add index1.html
+ 
+ git commit -m "added modification"
+
+11. Commit a single file to local repo
+
+ git commit -m "any message" file1
+
+12 show difference between chnages commited on the file and chnages newley done
+
+  take file index1.html ==> make some chnages and save the file
+
+ git status
+
+ git diff index1.html
+
+Discard the chnages form working directory on the file index1.html
+
+ git restore index1.html
+
+
+ Again take file index1.html ==> make some chnages and save the file
+
+ git status
+
+ git add .
+
+git status ==> changes are staged
+
+ how difference between chnages commited on the file and chnages That are staged
+
+
+  git diff --staged index1.html
+
+
+bring back the changes to Working directory
+
+
+ git restore --staged index1.html
+
+  git status ==> modification will be unstaged
+
+********************************
+
+Delete a file from local repo and working directory
+
+
+ git rm index1.html
+
+We will have to also commit the deleted changes
+
+git commit -m "deletion"
+
+git log --oneline --grep delete
+
+************************************
+
+Revert a commit :
+
+This is a scenario in which you will slect a commit id
+
+while applying revert command on the commit id, 
+
+what ever chnages happened as part of the commit will be back to its previous state
+
+Also whenever revert is done, a new commit id is generetd for revert action
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
