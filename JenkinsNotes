@@ -1,0 +1,148 @@
+Demo 1: Create a Jenkisn job that will clone a github repository in jenkins workspace
+
+Create a new job in jenkins
+Click on + sign to create new item/job/project
+Give a name to the job : CloneRepo
+Select freestyle project and click on OK button
+On the project click on Source code management
+Select git option
+Give git hub repo path
+https://github.com/Sonal0409/myproject05Aug
+
+Branch name as ===>  Master
+
+Save the job
+
+Click on Build now
+
+Repository will be cloned in jenkins workspace
+
+You can go to job → workspace folder to see the files
+
+
+Jenkins Triggers.
+     To automatically execute a jenkins job, you will use Jenkins triggers
+       Based on:
+
+      Periodic time- schedule
+      Whenever there is a commit in github repo
+      A parent job can trigger execution of child job
+      Execute a job from remote script
+
+You will go to build triggered section in the job to set up a trigger for automatic execution of the job
+
+
+Trigger prieodically
+
+Go to Job Clone repo --> build trigger--> build preodically --> give */2 * * * * --> Save and build now
+
+All build will be generated automatically every 2 mins
+
+Build Triggers--> Poll SCM --> * * * * *
+
+Build will be generated each time there is a chnage in the repository only.
+
+
+
+Jenkins--> Manage Jenkins-->Global Tool configuration
+
+Go to JDK section
+In this give:
+1. Uncheck -- install automatically
+2. JDK name as myjava
+3. Go to server type 
+Execute the command on terminal:
+mvn --version
+
+Copy the path of runtime java as shown by command output :
+
+Take the path and add it in jenkins for JAVA_HOME field
+
+Save the changes.
+
+Under GIT==> leave it same 
+
+Under maven ==> lets install it automatically
+Type mymaven and check the install automatically box.
+Save the changes
+
+
+****************************************
+
+CREATION OF COMPILE JOB
+***********************************
+
+1. new Job --1.complie-->freestyle project
+2. Source code management --> select git
+--->give git path ===> https://github.com/Sonal0409/DevOpsCodeDemo.git
+
+3. build ==> select invoke top level maven targets
+   select maven version===> mymaven
+    goal ==> compile
+4. save ==> build now 
+So all the compiled files will be present at this location
+==> look for this line in console output at the end on jenkins
+Compiling 13 source files to /var/lib/jenkins/workspace/compile1/target/classes
+
+5. Go to workspace on the left side of jenkins Job compile
+In the folder go to ==> target folder==> go to classes/com/edurekademo
+==> click on edurekademo==> got to utilities==> all class files will be there which have recently been compiled.
+******************************
+
+Testing --Unit Test report
+********************************
+
+1. jenkins--> new item--> Name= 3.unitTest==> freestyle project
+==> source codemanagement==>select git==> give git repo name 
+https://github.com/Sonal0409/DevOpsCodeDemo.git
+
+2. build ==> invoke top level maven target==> select maven version==>mymaven ==> goal = test
+
+3. Save and Build now.
+
+4. Check the workspace
+
+5. surefire-reports will be present
+
+But we cannot understand them easily. So lets generate understandable reports by using Junit reports option under post build actions
+
+6. Go back to job==> post build actions==> select junit test result job
+==> give target/surefire-reports/*.xml  ===>under test report xml
+This is path where xml files are there.
+Here *.xml is as we want to use all the xml files
+
+7. Save and build again
+
+Go to build number ===> on left side you will see Test Result 
+Click on it and you can see all pass and fail details of the tests
+
+Package Job
+***************************
+
+Go to jenkins--> new item--> Name= Package==> freestyle project
+==> source codemanagement==>select git==> give git repo name https://github.com/Sonal0409/DevOpsClassCodes
+ 
+build ==> invoke top level maven target==>mymaven
+
+ goal = package
+
+==> save==> build now
+==> click on build number and see the console
+
+==> go to workspace ==> target/addressbook.war
+
+
+
+Connecting all the 3 jobs so that each job can be triggered:
+
+
+Go to manage plugins → available section
+
+Search for build pipeline plugin
+
+Click on the checkbox and click on Install without restart
+
+
+Plugin will be installed.
+
+Lets build the pipeline:
