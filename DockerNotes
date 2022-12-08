@@ -1,0 +1,1000 @@
+Launch the lab 
+************************
+Steps to  Launch the Lab from LMS
+
+> Go to https://lms.simplilearn.com/
+> Click on to Program button under Post Graduate Program in DevOps 
+> Select Course 2 - PD DO - DevOps Certification Training
+> Go to Practice Lab on left side and click on it
+> Click on DevOps in AWS V2
+> Click on Launch Lab button at right bottom
+> Click on RDP (Remote Desktop protocol) access 
+> Click on Start Instance button and click Yes
+> It will take a while for the lab environment to start. Pls wait
+> Click on RDP Access
+> Click on Auth URL - blue button - to launch the lab
+> Lab will launch , click on OK button to proceed
+> Lab desktop will launch
+
+Start Jenkins Server
+***********************
+
+Go to lab terminal
+
+Execute:
+
+$ sudo su -
+
+$ systemctl start jenkins
+
+Go to browser
+
+Give following url 
+localhost:8080
+
+Login with following details:
+
+Username: admin
+Password: admin
+
+***********************
+Scenario 1:
+**********
+Build with parameters in jenkins
+
+
+What are parameters?
+
+Variables that store a value
+
+for eg:
+
+     Integer variable : a=10
+
+     String variable: user="Sonal"
+
+     Choice variables: color = ["red","blue","yellow"]
+   
+     boolean variables: flag = true/false
+
+Step 1: in a jenkins job, you will create varibale and assign a value to it
+
+Step2 : use this variable and fetch there values in under your Build step with shell scripting
+
+Step3 : Build now button will be changed to "build with Parameters"
+
+And the job will executed by taking values of the variables in the script or command that you are executing
+
+
+
+Demo:
+**********
+ Click on new item ==> Name of job- paramJob
+ Select freestyle project ==> press ok
+ Select the option "the project is parameterized" under General section of the job
+ In the drop down , pls select String parameter
+Provide the details as :
+Name : username
+Default value : sonal
+Description: this is a string parameter
+
+Go to build step
+Select Execute shell
+
+Provide the following command using the parameter
+
+echo 'The value of varaible username is :' $username
+
+Note: in jenkins to fetch the value of a parameter we use $ symbol followed by variable name
+
+Save the job
+
+You should also observe now you have build with parameters button
+
+Click on the build with parameters
+
+And see the output, it will print the variable value
+
+
+Demo 2:
+Create a job with Jenkins Environment variable and use them in your script
+************************
+
+ Click on new item ==> Name of job- paramJob
+ Select freestyle project ==> press ok
+Go to Build step ⇒ execute shell
+Under this you will see a link →  the list of available environment variables
+Click on it
+It will give a list of variable defined by jenkins
+Lets use these variables in our build step
+
+
+Under build step, give these
+
+echo 'The name of job is :' $JOB_NAME
+echo 'the build number is' $BUILD_NUMBER
+echo 'print jenkins home directory' $JENKINS_HOME
+
+Save the job  and execute
+
+
+********************************************
+
+Docker Images:
+
+Name of Docker Image
+Tags: different versions of the Image
+
+nameofImage:tagname
+
+Ubuntu:22.04
+registryaddress/repositoryname/imageName:tag
+
+docker.io/library/ubuntu:20.04
+
+If you give just imagename with pull command
+
+Docker will pull from dockerhub, library and latest image
+
+If you give just imagename with tag  in pull command
+
+Docker will pull from dockerhub, library and  image with specified tag
+
+Private registry
+***************
+
+$ docker pull 192.2.3.4:5000/sonal04/myimage:v2
+
+Docker will pull from 192.2.3.4:5000, sonal04 and  image with specified tag
+
+This is 192.2.3.4:5000 private registry address
+***********
+
+HOME directory :  /var/lib/docker
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Steps to install docker on your machine.
+******************************
+Centos:
+yum install docker 
+
+Ubuntu:
+
+ 
+sudo apt-get update
+sudo apt-get install -y apt-transport-https ca-certificates curl software-properties-common
+
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+sudo apt-get update ; clear
+sudo apt-get install -y docker-ce
+sudo service docker start ; clear
+***************************************
+
+Lab already has docker installed
+
+$ sudo su -
+
+** One has to be a root user to execute docker commands
+
+$ docker –version
+
+Start the docker engine
+
+$ systemctl start docker
+
+$ systemctl status docker
+
+Docker Images:
+*************************
+
+Demo1: Pull Image from docker hub to your local docker host
+
+docker pull imagename
+
+$ docker pull ubuntu
+
+Docker will pull the image with tag as latest from docker hub library
+
+OR
+
+docker pull imagename:tagname
+
+$ docker pull ubuntu:20.04
+
+Will pull ubuntu image of tag 20.04
+
+2. Check the list of  images pulled from docker host
+
+$ docker images
+
+OR
+
+$ docker image ls
+
+3. Search for images:
+**************
+$ docker search hello-world
+
+4. Delete the images from local docker host
+*******************
+$ docker rmi ubuntu
+
+$ docker rmi ubuntu:20.04
+
+5. Run an Image to create a container
+****************
+
+Docker run Imagename
+
+
+$ docker run nginx
+
+Run command: will first check locally if image nginx is available or not
+
+If image is not available locally
+
+RUn command will automatically
+
+> pull image from docker hub
+> run the image to launch a container
+> user will be inside the container process
+> user will not be able to see the host machine cursor
+
+To come out of this container/exit out of container
+Give CTL + c
+
+
+
+6. See the list of container created
+
+$ docker ps -a
+
+
+7.  Launch a container from an Image and container should be up & running
+
+When we execute the run command we have to mention in which mode we want to launch the container
+
+Detached mode (-d)
+
+$ docker run -d imagename
+
+$ docker run -d nginx
+$ docker ps -a
+$ docker container ls – list containers in running status
+
+Container will be launched
+Will be up & running
+User will be detached to the container ie: container is running in the background, user can continue working on the host machine
+
+
+
+Foreground mode
+
+
+$ docker run -it imagename
+
+-i : interactive
+-t: terminal
+
+$ docker run -it ubuntu
+
+Container will be launched
+Will be up & running
+User will be attached to the container
+That is , user will be on the container terminal
+
+
+
+
+Whenever you are attached to the terminal of the container, using the following options you will come out of the container:
+
+
+Ctl p + ctl q
+
+User will come out of the container and container will be still up and running
+
+exit
+
+User will come out of the container and container will be exited
+
+
+
+
+Attach to the terminal of the container again:
+
+$ docker attach containerid/containername
+
+Execute exit command to comout of container
+
+User will come out of the container and container will be exited
+
+To start a exited container:
+
+$ docker start containerid/name
+
+To stop a running container
+
+$ docker stop containerid/name
+
+
+Launch the lab 
+************************
+Steps to  Launch the Lab from LMS
+
+> Go to https://lms.simplilearn.com/
+> Click on to Program button under Post Graduate Program in DevOps 
+> Select Course 2 - PD DO - DevOps Certification Training
+> Go to Practice Lab on left side and click on it
+> Click on DevOps in AWS V2
+> Click on Launch Lab button at right bottom
+> Click on RDP (Remote Desktop protocol) access 
+> Click on Start Instance button and click Yes
+> It will take a while for the lab environment to start. Pls wait
+> Click on RDP Access
+> Click on Auth URL - blue button - to launch the lab
+> Lab will launch , click on OK button to proceed
+> Lab desktop will launch
+
+
+Start Docker Service:
+
+$ systemctl start docker
+
+Scenario1 : 
+
+
+Delete a Container from the host machine
+
+$ docker ps -a
+
+$ docker run -d –name n1 nginx
+
+Delete a Container from the host machine
+
+$ docker rm -f containername/conatinerid
+$ docker rm -f n1
+$ docker ps -a : no container will be there
+
+
+Describe all Details of the container created
+****************
+
+Inspect is the command that will describe all the details of the container in json format
+
+$ docker inspect containername/id
+Scenario 2: Port mapping or port forwarding
+*****************
+By default docker container is ready to be accessed by the user, it is the user internet who cannot reach the container.
+Port mapping/port forwarding is  a concept in docker that allows a user to access the container from browser of his machine
+Port mapping has to be done at the run time of container
+If the container is already running/exited, you cannot do port forwarding
+In port forwarding we have to provide mapping between 2 ports
+Systemport - any free port on the lab machine
+Containerport : port on which container is exposed to. You can get this information from the Image, look for expose keyword on the image in docker hub
+
+
+Method 1: user defined custom port mapping : 
+
+ -p : this option will perform port mapping
+
+$ docker run –name n2 -d -p Systemport:containerport  nginx
+
+$ docker run –name n2 -d -p 8282:80 nginx
+$ docker port n2
+
+
+Method 2:  docker provided random port mapping : -P
+
+$ docker run -d –name web -P httpd
+$ docker port web
+
+In this case user will not provide any port information
+Docker will do random free port from host machine and map it to your container port
+
+Access the container OR execute a command on the container from the host machine
+
+Take a container name which is running and which has port mapping done
+
+$ docker exec -it containername command
+
+$ docker exec -it n2 bash
+$ cd /usr/share/nginx/html
+$ ls  
+$ cat index.html ⇒ see the index file
+$ echo "this file is from docker" > index.html
+$ exit
+Clean up docker host:
+************************
+Delete  all containers at once
+
+$ docker rm -f $(docker ps -aq)
+$ docker rm -f containername
+
+Delete all images:
+
+$ docker system prune –all
+
+Delete all images
+ Delete exited container
+
+
+Scenario 3:  Docker Volumes
+******************
+Volume : 
+we can preserve the data of the container directory on the host machine using volumes
+You can place a file/set of files from host machine on the container directory using Volumes
+Volume is mapped to the container using -v option
+First user will create a volume on the host machine which will provide you a directory in
+/var/lib/docker/volumes path , where your container data can be preserved
+Then user will mount the volume on the containers directory
+
+
+Type1 : Named volume
+
+We create a volume and we give a name to it
+
+$ docker volume create myvol
+
+The path where volume is going to preserve the data, all details of the volume
+
+$ docker volume inspect myvol
+
+Observation: 
+"Mountpoint": "/var/lib/docker/volumes/myvol/_data"
+
+Mountpath = path where volume is going to preserve the data of containers directory
+
+
+
+Step 2: map the volume on the container, which is to be done at runtime
+
+$ docker run -it –name c1 -v volumename:containerdirectory ubuntu
+
+$ docker run -it –name u1 -v myvol:/tmp ubuntu
+$ cd /tmp
+$ touch file1 file2
+
+Come out of the container = ctlp + ctlq
+
+Go to the volume directory
+
+
+$ cd /var/lib/docker/volumes/myvol/_data
+$ ls
+You will find files file1 & file2 preserved
+These files are coming from container
+
+Create file in volume directory
+$ touch file3
+$ ls  ⇒ file1 file2 file3
+
+Go inside the container again:
+
+$ docker attach u1
+$ /tmp
+You will find 3 files
+$ exit out of container
+$ docker rm -f u1
+
+But in volume _data directory your files will preserved
+$ cd /var/lib/docker/volumes/myvol/_data
+$ ls
+
+
+Type 2: Bind mounts
+
+These kind of volumes will preserve data of the container on any directory of the host machine
+
+OR
+
+From any directory of host machine if your want data to be available on your container, then use bind mount
+
+$ mkdir mycode
+$ cd mycode
+$ vim index.html
+<h1> this is file from docker volume </h1>
+<h1> file created by Sonal </h1>
+Press esc 
+:wq!
+
+We want this code file to be available on a container created using image httpd, we will volumes of type BIND mount
+
+Which directory on the container : /usr/local/apache2/htdocs/
+
+$ pwd
+
+$ docker run -d –name web  -p 8989:80 -v $pwd: /usr/local/apache2/htdocs/ httpd
+
+$ docker run -d –name web -P -v $pwd: /usr/local/apache2/htdocs/ httpd
+
+
+
+
+
+
+
+
+Scenario 4: Create your custom Image
+********************
+
+Introduction to docker file
+
+Custom image is created from a dockerfile
+Name of the file is going to be dockerfile always
+You can version control these dockerfile in SCM
+
+Create an Image that will deploy index.html file on a container that has nginx webserver 
+
+$ mkdir demodockerfile
+$ cd demodockerfile
+$ vim index.html
+<h1> file from docker </h1>
+Esc :wq!
+$ vim dockerfile
+
+
+FROM ubuntu
+RUN apt-get update
+RUN apt-get install nginx -y
+COPY index.html /var/www/html
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
+
+
+$ docker build -t mynginx .
+
+$ docker images
+
+ Create your custom Image
+********************
+
+Introduction to docker file
+
+Custom image is created from a dockerfile
+Name of the file is going to be dockerfile always
+You can version control these dockerfile in SCM
+
+Create an Image that will deploy index.html file on a container that has nginx webserver 
+
+$ mkdir demodockerfile
+$ cd demodockerfile
+$ vim index.html
+<h1> file from docker </h1>
+Esc :wq!
+$ vim dockerfile
+
+
+FROM ubuntu
+RUN apt-get update
+RUN apt-get install nginx -y
+COPY index.html /var/www/html
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
+
+$ docker build -t mynginx .
+
+-t : tag the name to image
+
+$ docker images
+
+
+Your image with the name mynginx will be there.
+
+RUN the image:
+
+$ docker run -d –name myweb  -P mynginx
+
+Go to the browser of lab
+
+Localhost:portnumber
+
+
+Scenario 2: Push the Custom image in to public registry (dockerhub), so that others can also pull your image from dockerhub
+
+Step1: Create a userid and password in docker hub
+
+Sign up on https://hub.docker.com/
+
+Step 2:
+
+In order to push image from host to docker hub —> you need to login from host machine to dockerhub
+
+$ docker login
+
+Username: <dockerhubusername>
+Password: <password>
+
+Step3: lets push the custom image into docker hub
+
+$ docker push <CustomImagename> → push in to docker hub library, which you dont have access to
+
+Change the name of the Image for it to be pushed into our repository on docker hub
+
+$ docker tag oldImagename reposname/mynginx
+
+$ docker tag mynginx sonal04/mynginx
+
+Step 4: push to docker hub
+
+$ docker push sonal04/mynginx
+
+
+Dockerfile demo 2:
+
+
+
+mkdir demo2
+  cd demo2
+   ls
+ cp /var/lib/jenkins/workspace/Package/target/addressbook.war .
+
+vim dockerfile
+
+
+FROM tomcat:9
+ADD addressbook.war /usr/local/tomcat/webapps
+EXPOSE 8080
+CMD ["catalina.sh", "run"]
+
+$ docker build -t mytomcat .
+
+$ docker images
+
+$ docker run -d –name mytom -P mytomcat
+
+
+******************************
+
+Docker-compose
+
+If you want to create multiple containers from different images at one go, you will make use of docker tool → docker COMPOSE
+
+
+Write a file with information of what container we want, what should be image, port, volume, env variable
+
+This file is written in YAML
+It is not a programming language
+Its not a scriptitng language
+Its a file format
+It store the data in key and value format
+
+Name of the file is : docker-compose.yml
+
+Docker compose is a tool to be installed on Docker host
+
+sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+
+sudo chmod +x /usr/local/bin/docker-compose
+
+docker-compose --version
+
+Create a compose file
+
+mkdir composedemo
+cd composedemo
+vim docker-compose.yml
+
+version: '2'
+
+services:
+
+  compose-test:
+   image: centos:7
+   links:
+    - compose-db
+   command: sleep infinity
+  compose-db:
+   image: redis
+   expose:
+    - "6379"
+
+
+
+Press esc :wq!
+
+$ docker-compose up -d
+
+$ docker-compose ps
+
+$ docker-compose exec compose-test /bin/bash 
+
+OR
+
+$ docker-compose exec compose-test sh
+
+On the test container we need to ping DB container (6379)
+
+To do this we need to install ncat package
+
+$ yum install nc -y
+
+Use ncat command to connect to container with name compose-db
+
+$ nc compose-db 6379
+
+
+
+
+ping
++PONG
+
+set name sonal
++OK
+
+set day sunday
++OK
+
+get name
+$5
+sonal
+
+get day
+$6
+sunday
+
+Ctl C
+
+Exit ⇒ out of container
+
+Stop & Delete all containers created using docker-compose file
+
+$ docker-compose down
+
+
+Docker network
+***************************
+
+$ docker network ls
+
+List of networks that are in your docker host
+The default network that all containers in a docker host use is BRIDGE network
+
+Step1:
+Create your 2 custom bridge network
+
+$ docker network create –driver bridge net1
+
+$ docker network create –driver bridge net2
+
+$ docker network ls
+
+Step 2:
+
+Create container 1 and place it in network net1
+
+
+$ docker run -itd –name c1 –network net1 busybox
+
+
+$ docker inspect c1
+
+Copy the ip address : 172.19.0.2
+
+Create container 2 and place it in the same network net1
+
+$ docker run -itd –name c2 –network net1 busybox
+
+$ docker inspect c2
+
+Copy the ip address : 172.19.0.3
+
+
+Create container 3 and place it in the network net2
+
+$ docker run -itd –name c3 –network net2 busybox
+
+$ docker inspect c3
+
+Copy the ip address : 172.20.0.2
+
+Query all the containers that are part of a network
+*****
+docker network inspect net1 -f "{{json .Containers }}"
+
+Remove the network:
+***********
+
+Delete containers
+
+Docker network rm net1 net2
+
+
+
+
+
+Create a Private registry on the docker host
+
+$ docker run -d -p 5000:5000 --name lr registry
+
+Tag the existing with a new name : it create a copy of image with new name
+
+docker tag mytomcat localhost:5000/mytomcat
+
+Push it into your registry
+
+$ docker push localhost:5000/mytomcat
+
+Check presence of image in registry container
+
+http://localhost:5000/v2/_catalog
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
