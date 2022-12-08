@@ -1,0 +1,43 @@
+
+take a word document
+
+Write Step 1: GITHUB repo with code:
+
+https://github.com/Sonal0409/DevOpsCodeDemo.git
+https://github.com/Sonal0409/nodejsappDockerfile.git
+
+Paste the screenshot of it
+
+
+Step2 : Build jenkins pipeline 
+
+ > Compile > test > Package the above code
+
+Give screenshot of the pipeline
+
+give screenshot of war file
+
+
+Step 3: 
+
+Write the dockerfile for tomcat Image and copy the .war file on tomcat container
+
+copy paste your dockerfile
+
+Push the image to docker hub
+
+give screenshot of that
+
+Run the image to create a container
+
+write the comman
+
+screenshot of container running
+
+access the application from browser
+localhost:portnumber/addressbook
+
+
+
+
+
